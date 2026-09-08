@@ -1,20 +1,24 @@
+import { getTranslator, getAlternates } from "@/lib/i18n/server";
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { notFound } from "next/navigation";
-import { guides } from "@/lib/guides";
+import { guides as englishGuides, translateGuides } from "@/lib/guides";
 import { AppFigure } from "@/components/product-showcase";
 export function generateStaticParams() {
-  return guides.map((g) => ({ slug: g.slug }));
+  return englishGuides.map((g) => ({ slug: g.slug }));
 }
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  const t = await getTranslator();
+  const guides = translateGuides(t);
   const { slug } = await params;
   const guide = guides.find((g) => g.slug === slug);
   return {
-    title: guide?.title ?? "Guide not found",
+    alternates: guide ? await getAlternates(`/guide/${guide.slug}`) : undefined,
+    title: guide?.title ?? t("Page not found"),
     description: guide?.description,
   };
 }
@@ -23,15 +27,17 @@ export default async function GuideArticle({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  const t = await getTranslator();
+  const guides = translateGuides(t);
   const { slug } = await params;
   const index = guides.findIndex((g) => g.slug === slug);
   if (index < 0) notFound();
   const guide = guides[index];
   return (
     <div className="container docs-layout">
-      <nav className="docs-nav" aria-label="Guide chapters">
-        <span className="eyebrow">The user guide</span>
-        <Link href="/guide">Overview & example</Link>
+      <nav className="docs-nav" aria-label={t("Guide chapters")}>
+        <span className="eyebrow">{t("The user guide")}</span>
+        <Link href="/guide">{t("Overview & example")}</Link>
         {guides.map((g, i) => (
           <Link
             key={g.slug}
@@ -44,7 +50,7 @@ export default async function GuideArticle({
       </nav>
       <article className="docs-article">
         <span className="eyebrow">
-          Chapter {String(index + 1).padStart(2, "0")} /{" "}
+          {t("Chapter")} {String(index + 1).padStart(2, "0")} /{" "}
           {String(guides.length).padStart(2, "0")}
         </span>
         <h1>{guide.title}</h1>
@@ -68,22 +74,23 @@ export default async function GuideArticle({
         ))}
         <nav
           className="article-pagination"
-          aria-label="Previous and next chapters"
+          aria-label={t("Previous and next chapters")}
         >
           <Link
             href={index > 0 ? `/guide/${guides[index - 1].slug}` : "/guide"}
           >
-            <span>← Previous</span>
-            {index > 0 ? guides[index - 1].title : "Guide overview"}
+            <span>{t("← Previous")}</span>
+            {index > 0 ? guides[index - 1].title : t("Guide overview")}
           </Link>
           {index < guides.length - 1 ? (
             <Link href={`/guide/${guides[index + 1].slug}`}>
-              <span>Next →</span>
+              <span>{t("Next →")}</span>
               {guides[index + 1].title}
             </Link>
           ) : (
             <Link href="/support">
-              <span>Need a hand? →</span>Visit Support
+              <span>{t("Need a hand? →")}</span>
+              {t("Visit Support")}
             </Link>
           )}
         </nav>

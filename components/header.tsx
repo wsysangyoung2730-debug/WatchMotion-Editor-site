@@ -3,15 +3,32 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowUpRight, Globe, Menu, X } from "lucide-react";
+import {
+  locales,
+  languageNames,
+  languageTags,
+  localizedPath,
+  stripLocale,
+  isLocale,
+  preferenceCookie,
+  type Locale,
+} from "@/lib/i18n/routing";
 
 const links = [
   ["/mac-editor", "Mac Editor"],
   ["/guide", "User Guide"],
   ["/support", "Support"],
 ];
-export function Header() {
-  const pathname = usePathname();
+export function Header({
+  locale,
+  labels,
+}: {
+  locale: Locale;
+  labels: Record<string, string>;
+}) {
+  const pathname = stripLocale(usePathname());
+  const t = (key: string) => labels[key] ?? key;
   const [open, setOpen] = useState(false);
   useEffect(() => {
     if (!open) return;
@@ -25,10 +42,10 @@ export function Header() {
     <header className="site-header">
       <div className="container header-inner">
         <Link
-          href="/"
+          href={localizedPath("/", locale)}
           className="brand"
           onClick={() => setOpen(false)}
-          aria-label="WatchMotion Editor home"
+          aria-label={t("WatchMotion Editor home")}
         >
           <Image src="/images/app-icon.png" alt="" width={38} height={38} />
           <span>
@@ -37,7 +54,7 @@ export function Header() {
         </Link>
         <button
           className="menu-toggle"
-          aria-label={open ? "Close navigation" : "Open navigation"}
+          aria-label={t(open ? "Close navigation" : "Open navigation")}
           aria-expanded={open}
           aria-controls="main-navigation"
           onClick={() => setOpen(!open)}
@@ -46,13 +63,13 @@ export function Header() {
         </button>
         <nav
           id="main-navigation"
-          aria-label="Main navigation"
+          aria-label={t("Main navigation")}
           className={open ? "main-nav open" : "main-nav"}
         >
           {links.map(([href, label]) => (
             <Link
               key={href}
-              href={href}
+              href={localizedPath(href, locale)}
               aria-current={
                 pathname === href || pathname.startsWith(href + "/")
                   ? "page"
@@ -60,16 +77,47 @@ export function Header() {
               }
               onClick={() => setOpen(false)}
             >
-              {label}
+              {t(label)}
             </Link>
           ))}
           <Link
             className="nav-cta"
-            href="/#download"
+            href={localizedPath("/#download", locale)}
             onClick={() => setOpen(false)}
           >
-            Get the apps <ArrowUpRight size={15} />
+            {t("Get the apps")} <ArrowUpRight size={15} />
           </Link>
+          <label className="language-picker">
+            <Globe size={17} aria-hidden="true" />
+            <span className="sr-only">{t("Language")}</span>
+            <select
+              value={locale}
+              onChange={(event) => {
+                const next = event.target.value;
+                if (!isLocale(next)) return;
+                try {
+                  document.cookie = `${preferenceCookie}=${next}; Path=/; Max-Age=31536000; SameSite=Lax${window.location.protocol === "https:" ? "; Secure" : ""}`;
+                } catch {
+                  /* Disabled cookies must not prevent language switching. */
+                }
+                window.location.assign(
+                  localizedPath(window.location.pathname, next) +
+                    window.location.search +
+                    window.location.hash,
+                );
+              }}
+            >
+              {locales.map((language) => (
+                <option
+                  key={language}
+                  value={language}
+                  lang={languageTags[language]}
+                >
+                  {languageNames[language]}
+                </option>
+              ))}
+            </select>
+          </label>
         </nav>
       </div>
     </header>

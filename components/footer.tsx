@@ -1,7 +1,9 @@
-import Link from "next/link";
+import { getTranslator } from "@/lib/i18n/server";
+import Link from "@/components/localized-link";
 import { ArrowUpRight } from "lucide-react";
 import { site } from "@/lib/site";
-export function Footer() {
+export async function Footer() {
+  const t = await getTranslator();
   return (
     <footer className="site-footer">
       <div className="container">
@@ -10,15 +12,16 @@ export function Footer() {
             <Link className="footer-brand" href="/">
               WatchMotion Editor<span className="coral">.</span>
             </Link>
-            <p>From a movement to a meaningful dataset.</p>
+            <p>{t("From a movement to a meaningful dataset.")}</p>
           </div>
           <div className="footer-links">
-            <Link href="/mac-editor">Mac Editor</Link>
-            <Link href="/guide">User Guide</Link>
-            <Link href="/support">Support</Link>
-            <Link href="/privacy">Privacy</Link>
+            <Link href="/mac-editor">{t("Mac Editor")}</Link>
+            <Link href="/guide">{t("User Guide")}</Link>
+            <Link href="/support">{t("Support")}</Link>
+            <Link href="/privacy">{t("Privacy")}</Link>
             <a href={`mailto:${site.email}`}>
-              Contact <ArrowUpRight size={14} />
+              {t("Contact")}
+              <ArrowUpRight size={14} />
             </a>
           </div>
         </div>
@@ -26,7 +29,7 @@ export function Footer() {
           <span>
             © {new Date().getFullYear()} WatchMotion Editor · {site.operator}
           </span>
-          <span>Made for Apple Watch, iPhone & Mac.</span>
+          <span>{t("Made for Apple Watch, iPhone & Mac.")}</span>
         </div>
       </div>
     </footer>

@@ -6,6 +6,28 @@ export type GuideSection = {
   note?: string;
   image?: { src: string; alt: string; caption: string };
 };
+// Translate only visible copy; route IDs, anchors and native capture paths stay stable.
+export function translateGuides(t: (text: string) => string): Guide[] {
+  return guides.map((guide) => ({
+    ...guide,
+    title: t(guide.title),
+    description: t(guide.description),
+    sections: guide.sections.map((section) => ({
+      ...section,
+      title: t(section.title),
+      paragraphs: section.paragraphs?.map(t),
+      steps: section.steps?.map(t),
+      note: section.note ? t(section.note) : undefined,
+      image: section.image
+        ? {
+            ...section.image,
+            alt: t(section.image.alt),
+            caption: t(section.image.caption),
+          }
+        : undefined,
+    })),
+  }));
+}
 export type Guide = {
   slug: string;
   title: string;

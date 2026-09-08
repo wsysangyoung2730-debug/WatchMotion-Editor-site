@@ -1,29 +1,32 @@
+import { getTranslator } from "@/lib/i18n/server";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { ArrowUpRight } from "lucide-react";
 
 /** The app pixels are a native window capture, never a generated interface. */
-export function ProductShowcase() {
+export async function ProductShowcase() {
+  const t = await getTranslator();
   return (
     <section className="product-stage" aria-labelledby="showcase-title">
       <div className="container stage-content">
         <div className="stage-heading">
           <div>
-            <span className="eyebrow">The Mac workspace</span>
+            <span className="eyebrow">{t("The Mac workspace")}</span>
             <h2 id="showcase-title">
-              Find the moments
+              {t("Find the moments")}
               <br />
-              that matter.
+              {t("that matter.")}
             </h2>
           </div>
           <div>
             <p>
-              Review activity. Shape your segments.
+              {t("Review activity. Shape your segments.")}
               <br />
-              Build a dataset with context.
+              {t("Build a dataset with context.")}
             </p>
             <Link className="text-link light-link" href="/mac-editor">
-              Explore the editor <ArrowUpRight size={18} />
+              {t("Explore the editor")}
+              <ArrowUpRight size={18} />
             </Link>
           </div>
         </div>
@@ -32,11 +35,13 @@ export function ProductShowcase() {
             href="/images/mac-editor-dark.png"
             target="_blank"
             rel="noreferrer"
-            aria-label="Open the actual Mac editor screenshot at full size"
+            aria-label={t("Open the actual Mac editor screenshot at full size")}
           >
             <Image
               src="/images/mac-editor-dark.png"
-              alt="Actual WatchMotion Editor Mac window: Desk Object Transfer recording, motion charts, and a selected Object Transfer segment in the inspector."
+              alt={t(
+                "Actual WatchMotion Editor Mac window: Desk Object Transfer recording, motion charts, and a selected Object Transfer segment in the inspector.",
+              )}
               width={1512}
               height={900}
               sizes="(max-width: 760px) 100vw, 1240px"
@@ -44,8 +49,10 @@ export function ProductShowcase() {
             />
           </a>
           <figcaption>
-            Actual Mac app · Everyday Hand Motions · Illustrative sample data{" "}
-            <span>View full size ↗</span>
+            {t(
+              "Actual Mac app · Everyday Hand Motions · Illustrative sample data",
+            )}{" "}
+            <span>{t("View full size ↗")}</span>
           </figcaption>
         </figure>
       </div>
@@ -53,7 +60,7 @@ export function ProductShowcase() {
   );
 }
 
-export function AppFigure({
+export async function AppFigure({
   src,
   alt,
   caption,
@@ -62,24 +69,25 @@ export function AppFigure({
   alt: string;
   caption: string;
 }) {
+  const t = await getTranslator();
   return (
     <figure className="app-figure">
       <a
         href={src}
         target="_blank"
         rel="noreferrer"
-        aria-label={`Open full-size screenshot: ${alt}`}
+        aria-label={`${t("Open full-size screenshot:")} ${t(alt)}`}
       >
         <Image
           src={src}
-          alt={alt}
+          alt={t(alt)}
           width={1512}
           height={900}
           sizes="(max-width: 760px) 100vw, 1100px"
         />
       </a>
       <figcaption>
-        {caption} <span>View full size ↗</span>
+        {t(caption)} <span>{t("View full size ↗")}</span>
       </figcaption>
     </figure>
   );

@@ -7,7 +7,7 @@
 ![Node.js](https://img.shields.io/badge/Node.js_24-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
-The English product website and user guide for **WatchMotion Editor** — capture motion on Apple Watch, review on iPhone, and build labeled datasets on Mac.
+The official product website and user guide for **WatchMotion Editor** — capture motion on Apple Watch, review on iPhone, and build labeled datasets on Mac.
 
 **Live site:** [watch-motion-editor-site.vercel.app](https://watch-motion-editor-site.vercel.app)
 
@@ -54,6 +54,12 @@ node scripts/smoke-test.mjs # requires the local server
 ```
 
 Guide content: [`lib/guides.ts`](lib/guides.ts) · Contact and settings: [`lib/site.ts`](lib/site.ts)
+
+## Languages
+
+English is the default at existing URLs. Korean (`/ko`), Japanese (`/ja`), Simplified Chinese (`/zh-CN`), and Traditional Chinese (`/zh-TW`) include all pages and guide chapters. The language picker keeps the current page and remembers explicit choices for one year; browser language does not change the first visit.
+
+Translations: [`lib/i18n/messages`](lib/i18n/messages). Keep all dictionary keys in sync with `en.json`; `npm test` checks coverage. Real app screenshots, example labels, and actual app button names remain unchanged. Have native speakers review translations, especially the privacy policy, before publication.
 
 ## Deploy to Vercel
 
