@@ -3,17 +3,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { ArrowUpRight, Globe, Menu, X } from "lucide-react";
-import {
-  locales,
-  languageNames,
-  languageTags,
-  localizedPath,
-  stripLocale,
-  isLocale,
-  preferenceCookie,
-  type Locale,
-} from "@/lib/i18n/routing";
+import { ArrowUpRight, Menu, X } from "lucide-react";
+import { LanguagePicker } from "@/components/language-picker";
+import { localizedPath, stripLocale, type Locale } from "@/lib/i18n/routing";
 
 const links = [
   ["/mac-editor", "Mac Editor"],
@@ -87,37 +79,7 @@ export function Header({
           >
             {t("Get the apps")} <ArrowUpRight size={15} />
           </Link>
-          <label className="language-picker">
-            <Globe size={17} aria-hidden="true" />
-            <span className="sr-only">{t("Language")}</span>
-            <select
-              value={locale}
-              onChange={(event) => {
-                const next = event.target.value;
-                if (!isLocale(next)) return;
-                try {
-                  document.cookie = `${preferenceCookie}=${next}; Path=/; Max-Age=31536000; SameSite=Lax${window.location.protocol === "https:" ? "; Secure" : ""}`;
-                } catch {
-                  /* Disabled cookies must not prevent language switching. */
-                }
-                window.location.assign(
-                  localizedPath(window.location.pathname, next) +
-                    window.location.search +
-                    window.location.hash,
-                );
-              }}
-            >
-              {locales.map((language) => (
-                <option
-                  key={language}
-                  value={language}
-                  lang={languageTags[language]}
-                >
-                  {languageNames[language]}
-                </option>
-              ))}
-            </select>
-          </label>
+          <LanguagePicker locale={locale} label={t("Language")} />
         </nav>
       </div>
     </header>
