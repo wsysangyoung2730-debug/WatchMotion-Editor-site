@@ -93,7 +93,25 @@ export default async function Privacy() {
           </p>
         </section>
         <section>
-          <h2>{t("5. This website")}</h2>
+          <h2>{t("5. Purchases and free trial")}</h2>
+          <p>
+            {t(
+              "The Mac app offers a one-time, non-consumable Full Unlock purchase through Apple’s StoreKit. Apple processes the transaction and provides the app with signed purchase and entitlement information, including product, transaction, purchase, revocation, and verification status. We do not receive your full payment card details.",
+            )}
+          </p>
+          <p>
+            {t(
+              "To enforce the free trial, the Mac app stores a device-local trial record in the macOS Keychain. It contains a workspace identifier, identifiers for recordings admitted for editing, and the number of completed dataset exports. This record does not contain motion samples, labels, notes, participant information, or payment card details, and it is not uploaded to an operator-run server.",
+            )}
+          </p>
+          <p>
+            {t(
+              "The Keychain trial record may remain after you delete recordings or the app so that deleting content does not reset the trial. You can delete it by removing the WatchMotion Editor trial entry from macOS Keychain Access or by erasing the device. A verified purchase entitlement replaces trial limits; refunds or revocations can remove that entitlement. Use Restore Purchases in the Mac app to ask Apple to restore an eligible purchase.",
+            )}
+          </p>
+        </section>
+        <section>
+          <h2>{t("6. This website")}</h2>
           <p>
             {t(
               "Language preference is stored in a first-party cookie for one year when you choose a language. It is used only to remember that choice, not for analytics or advertising.",
@@ -115,7 +133,7 @@ export default async function Privacy() {
           </p>
         </section>
         <section>
-          <h2>{t("6. When you contact support")}</h2>
+          <h2>{t("7. When you contact support")}</h2>
           <p>
             {t(
               "If you email support, we receive your email address and the information you choose to send, including message text and any attachments. We use it to respond, investigate issues, and maintain relevant support records. Correspondence is handled through our email provider; do not send recordings or sensitive participant information unless necessary and agreed in advance.",
@@ -128,7 +146,7 @@ export default async function Privacy() {
           </p>
         </section>
         <section>
-          <h2>{t("7. Your choices and other people’s information")}</h2>
+          <h2>{t("8. Your choices and other people’s information")}</h2>
           <p>
             {t(
               "You control whether to record, add optional context, transfer files, or export data. If you record or describe another person, obtain any permission required for your situation. Take particular care with children’s information and avoid including unnecessary identifying details.",
@@ -141,7 +159,7 @@ export default async function Privacy() {
           </p>
         </section>
         <section>
-          <h2>{t("8. Updates and contact")}</h2>
+          <h2>{t("9. Updates and contact")}</h2>
           <p>
             {t(
               "We may update this policy when the apps, website, or information-handling practices change. The date at the top identifies the latest update.",
