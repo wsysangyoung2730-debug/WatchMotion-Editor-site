@@ -1,30 +1,232 @@
-export type GuideSection = { id: string; title: string; paragraphs?: string[]; steps?: string[]; note?: string; image?: { src: string; alt: string; caption: string } };
-export type Guide = { slug: string; title: string; description: string; sections: GuideSection[] };
+export type GuideSection = {
+  id: string;
+  title: string;
+  paragraphs?: string[];
+  steps?: string[];
+  note?: string;
+  image?: { src: string; alt: string; caption: string };
+};
+export type Guide = {
+  slug: string;
+  title: string;
+  description: string;
+  sections: GuideSection[];
+};
 export const guides: Guide[] = [
-  {slug:"getting-started",title:"Set up your workspace",description:"Get your three devices ready, or explore the Mac editor with our example project.",sections:[
-    {id:"devices",title:"Three devices. One workflow.",paragraphs:["Apple Watch captures motion. Its paired iPhone receives recordings and lets you review them. Mac is the workspace for selecting ranges, labeling movements, organizing folders, and exporting datasets.","The complete workflow needs all three apps: iPhone with iOS 18.6 or later, Apple Watch with watchOS 11.6 or later, and Mac with macOS 15 or later. Install the Watch app on the Watch paired with your iPhone. This release does not include a dedicated iPad app."],note:"The apps do not require a WatchMotion Editor account. Keep Wi-Fi and Bluetooth enabled for device transfer, and allow local network access when requested."},
-    {id:"example",title:"Start with a familiar movement",paragraphs:["Our guide follows Everyday Hand Motions, a project built around moving a small box across a desk. The recording is named Desk Object Transfer. Pick up the box, move it from a left-hand marker to a right-hand marker, set it down, then pause. Repeat three times.","The downloadable example uses synthetic motion samples to illustrate this workflow. It is not a measurement of a real person or a benchmark for detection accuracy. Every Mac screenshot on this site was captured from the actual app with that example project."],steps:["Download the example project from the guide overview.","Open WatchMotion Editor on Mac and choose Open Project. Select the Everyday Hand Motions.watchmotion file.","Choose Desk Object Transfer in the sidebar. You can now review the charts without connecting a Watch."]},
-    {id:"workspace",title:"Know your way around",paragraphs:["The left sidebar contains folders and recordings. The center shows motion charts and Auto Segments. The inspector on the right shows the selected range, its label, and notes.","Use the appearance control in the workspace toolbar to choose System, Light, or Dark. To revisit the in-app introduction, open Settings and choose Show Tutorial."],image:{src:"/images/mac-editor-dark.png",alt:"Actual Mac workspace with the recording sidebar, motion charts, and selected snap inspector",caption:"Actual Mac app · The first Object Transfer segment is labeled here. Illustrative sample data."}}
-  ]},
-  {slug:"record-and-transfer",title:"Record, review, and transfer",description:"Capture a short activity on Watch, check it on iPhone, and send it to your Mac.",sections:[
-    {id:"record",title:"Capture on Apple Watch",steps:["Open WatchMotion Editor on your Watch. Choose Record when you are ready.","Perform the movement with a short quiet pause before and after it. Keep the Watch app open throughout the recording.","Choose Stop. Wait for the recording to arrive on the paired iPhone."],note:"Leaving the Watch app saves and stops recording. This is not continuous background tracking. A queued transfer can take a moment; keep your paired devices nearby."},
-    {id:"review",title:"Check the recording on iPhone",paragraphs:["Open the recording and check the duration, sample count, and motion preview. Switch between the available motion signals to make sure the movement is present. Add a brief note describing what happened.","For this example, use a note such as: ‘Move the small box from the left marker to the right marker. Pause between transfers.’ Avoid participant names or sensitive details unless they are necessary and you have permission to record them."]},
-    {id:"transfer",title:"Connect to your Mac",steps:["Open the Mac app and choose Start Receiving.","On iPhone, open Connection Settings and connect to your Mac. Keep Wi-Fi and Bluetooth enabled and grant local network access.","Approve the iPhone connection on Mac when prompted. Send the recording and wait for confirmation that it was received.","Select the received recording in the Mac sidebar and inspect its charts."],note:"Automatic Transfer applies to new Watch recordings received while connected. It does not automatically send all recordings already on your iPhone."},
-    {id:"retained",title:"If a recording has not arrived",paragraphs:["Check Saved Files on Watch. Retained files remain available until the iPhone confirms import. If needed, use Resend while the devices are nearby. Do not delete the only copy of a recording while a transfer is still pending.","If your Mac is not visible, check local network permission and Start Receiving before retrying. The Support page has a connection checklist."]}
-  ]},
-  {slug:"review-and-segment",title:"Find and refine motion segments",description:"Use activity suggestions as a starting point, then make the final boundary decisions yourself.",sections:[
-    {id:"read-charts",title:"Read the signals together",paragraphs:["User Acceleration shows acceleration with gravity removed, in g. Gyroscope shows rotation rate in radians per second. Attitude shows orientation angles in radians. The X, Y, and Z traces are different axes, not different activities.","Choose Fit All to see the recording. For Desk Object Transfer, look for three groups of movement separated by quiet intervals. Use more than one signal when deciding where the meaningful action starts and ends."]},
-    {id:"suggestions",title:"Ask for a first cut",steps:["Choose Suggest Segments in Auto Segments. If the recording has already been analyzed, the button is Analyze Again.","Expand the suggestions list and choose a segment. Dashed chart ranges represent suggestions, not final labels.","Review the beginning and end of the selected activity. Adjust the boundaries if needed.","Choose Confirm Segment to create a saved snap. It starts unlabeled. Dismiss suggestions you do not want to use."],note:"Auto Segments detects changes in motion activity. It does not recognize the meaning of an action or guarantee one segment per repetition. Three movements separated by clear quiet intervals may produce three suggestions, but continuous or subtle motion can split, merge, or be missed.",image:{src:"/images/mac-segments.png",alt:"Actual Auto Segments suggestion selected in the Mac charts, with Confirm Segment in the inspector",caption:"Actual Mac app · Review a suggested range before confirming it. Illustrative sample data."}},
-    {id:"manual",title:"Make the boundaries yours",paragraphs:["You can also drag across a chart to select a manual range. Review the selection in the inspector and save it as a snap. ‘Snap’ is the app’s name for a saved motion segment; it does not have to be a finger snap.","For a saved segment, move the range or drag its handles on the chart. Fit Selection focuses the view on that segment; Fit All returns to the full recording. Hold Space and drag to pan.","A useful segment includes the complete motion, without a long unrelated pause. Be consistent: decide whether your label includes picking up and putting down the object, then apply that rule across recordings."]}
-  ]},
-  {slug:"label-and-organize",title:"Label and organize your work",description:"Turn selected ranges into consistent annotations and export-ready folders.",sections:[
-    {id:"labels",title:"Create your project vocabulary",paragraphs:["Open the workspace toolbar’s Settings menu, then Project Labels. Manage the project’s label names, colors, order, and shortcuts. Project labels travel with exported projects.","For this example, use Object Transfer as the action label. Rest and Wrist Rotation are optional alternatives for separate activities. Choose labels that describe the action consistently, rather than the person performing it."]},
-    {id:"annotate",title:"Label the selected snap",steps:["Select a saved snap in the chart or Motion Snaps list.","In the right inspector, open the Label control and choose Object Transfer.","Add a short note if this segment needs context, such as which direction the box moved.","Review the range again. Labels and notes are saved automatically in the workspace."],image:{src:"/images/mac-editor-light.png",alt:"Actual light-mode Mac editor showing an Object Transfer label and contextual note",caption:"Actual Mac app in Light appearance · The layout stays the same. Illustrative sample data."}},
-    {id:"folders",title:"Collect the segments you want to export",steps:["Choose New Folder in the sidebar and give it a meaningful name, such as Object Transfers.","Select a labeled snap, then choose Add to Folder in the inspector.","Repeat for the other confirmed movements. Open the folder to review its items before exporting."],note:"Choose a label before adding a snap to a folder. A suggestion alone is not ready for your dataset: confirm it, review it, and label it first."}
-  ]},
-  {slug:"export-and-save",title:"Export a dataset. Keep a project.",description:"Choose between analysis-ready exports and a project you can reopen for editing.",sections:[
-    {id:"csv",title:"Export selected data as CSV",steps:["Open the folder containing your reviewed, labeled segments.","Choose Export CSV and review the dataset export options.","Choose the included data and metadata deliberately. Leave out participant details you do not need.","Choose the destination and export. Open the result in your analysis tool and check the columns, units, labels, and sample count before using it."],paragraphs:["CSV exports are for working with data outside the editor. They are not a replacement for saving a complete editable project."]},
-    {id:"create-ml",title:"Prepare data for Create ML",paragraphs:["Use Export Create ML from a folder when you need the app’s activity-data export format. Check the export report for skipped items and review the output before training.","A successful export does not establish dataset quality or model accuracy. Use representative recordings, consistent labels, and an appropriate evaluation strategy for your project."]},
-    {id:"project",title:"Save a project you can reopen",steps:["Choose Export Project in the workspace toolbar.","Choose a file name and destination. The default project extension is .watchmotion.","Keep the project file somewhere you control. Use Open Project to continue working with it later."],paragraphs:["In the Mac app’s Settings → Export, you can change the default project name, whether the date and time are appended, and the project format. .watchmotion and .zip contain the same ZIP-based project. CSV datasets stay .csv; metadata stays .json.","Keep exported projects and datasets private when they include participant information or sensitive notes. A file saved to a cloud-synced folder is also subject to that storage provider’s settings."],note:"An exported file is a separate copy. Changes in the workspace do not update an older export automatically. Export again after making important edits."}
-  ]}
+  {
+    slug: "getting-started",
+    title: "Set up your workspace",
+    description:
+      "Get your three devices ready, or explore the Mac editor with our example project.",
+    sections: [
+      {
+        id: "devices",
+        title: "Three devices. One workflow.",
+        paragraphs: [
+          "Apple Watch captures motion. Its paired iPhone receives recordings and lets you review them. Mac is the workspace for selecting ranges, labeling movements, organizing folders, and exporting datasets.",
+          "The complete workflow needs all three apps: iPhone with iOS 18.6 or later, Apple Watch with watchOS 11.6 or later, and Mac with macOS 15 or later. Install the Watch app on the Watch paired with your iPhone. This release does not include a dedicated iPad app.",
+        ],
+        note: "The apps do not require a WatchMotion Editor account. Keep Wi-Fi and Bluetooth enabled for device transfer, and allow local network access when requested.",
+      },
+      {
+        id: "example",
+        title: "Start with a familiar movement",
+        paragraphs: [
+          "Our guide follows Everyday Hand Motions, a project built around moving a small box across a desk. The recording is named Desk Object Transfer. Pick up the box, move it from a left-hand marker to a right-hand marker, set it down, then pause. Repeat three times.",
+          "The downloadable example uses synthetic motion samples to illustrate this workflow. It is not a measurement of a real person or a benchmark for detection accuracy. Every Mac screenshot on this site was captured from the actual app with that example project.",
+        ],
+        steps: [
+          "Download the example project from the guide overview.",
+          "Open WatchMotion Editor on Mac and choose Open Project. Select the Everyday Hand Motions.watchmotion file.",
+          "Choose Desk Object Transfer in the sidebar. You can now review the charts without connecting a Watch.",
+        ],
+      },
+      {
+        id: "workspace",
+        title: "Know your way around",
+        paragraphs: [
+          "The left sidebar contains folders and recordings. The center shows motion charts and Auto Segments. The inspector on the right shows the selected range, its label, and notes.",
+          "Use the appearance control in the workspace toolbar to choose System, Light, or Dark. To revisit the in-app introduction, open Settings and choose Show Tutorial.",
+        ],
+        image: {
+          src: "/images/mac-editor-dark.png",
+          alt: "Actual Mac workspace with the recording sidebar, motion charts, and selected snap inspector",
+          caption:
+            "Actual Mac app · The first Object Transfer segment is labeled here. Illustrative sample data.",
+        },
+      },
+    ],
+  },
+  {
+    slug: "record-and-transfer",
+    title: "Record, review, and transfer",
+    description:
+      "Capture a short activity on Watch, check it on iPhone, and send it to your Mac.",
+    sections: [
+      {
+        id: "record",
+        title: "Capture on Apple Watch",
+        steps: [
+          "Open WatchMotion Editor on your Watch. Choose Record when you are ready.",
+          "Perform the movement with a short quiet pause before and after it. Keep the Watch app open throughout the recording.",
+          "Choose Stop. Wait for the recording to arrive on the paired iPhone.",
+        ],
+        note: "Leaving the Watch app saves and stops recording. This is not continuous background tracking. A queued transfer can take a moment; keep your paired devices nearby.",
+      },
+      {
+        id: "review",
+        title: "Check the recording on iPhone",
+        paragraphs: [
+          "Open the recording and check the duration, sample count, and motion preview. Switch between the available motion signals to make sure the movement is present. Add a brief note describing what happened.",
+          "For this example, use a note such as: ‘Move the small box from the left marker to the right marker. Pause between transfers.’ Avoid participant names or sensitive details unless they are necessary and you have permission to record them.",
+        ],
+      },
+      {
+        id: "transfer",
+        title: "Connect to your Mac",
+        steps: [
+          "Open the Mac app and choose Start Receiving.",
+          "On iPhone, open Connection Settings and connect to your Mac. Keep Wi-Fi and Bluetooth enabled and grant local network access.",
+          "Approve the iPhone connection on Mac when prompted. Send the recording and wait for confirmation that it was received.",
+          "Select the received recording in the Mac sidebar and inspect its charts.",
+        ],
+        note: "Automatic Transfer applies to new Watch recordings received while connected. It does not automatically send all recordings already on your iPhone.",
+      },
+      {
+        id: "retained",
+        title: "If a recording has not arrived",
+        paragraphs: [
+          "Check Saved Files on Watch. Retained files remain available until the iPhone confirms import. If needed, use Resend while the devices are nearby. Do not delete the only copy of a recording while a transfer is still pending.",
+          "If your Mac is not visible, check local network permission and Start Receiving before retrying. The Support page has a connection checklist.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "review-and-segment",
+    title: "Find and refine motion segments",
+    description:
+      "Use activity suggestions as a starting point, then make the final boundary decisions yourself.",
+    sections: [
+      {
+        id: "read-charts",
+        title: "Read the signals together",
+        paragraphs: [
+          "User Acceleration shows acceleration with gravity removed, in g. Gyroscope shows rotation rate in radians per second. Attitude shows orientation angles in radians. The X, Y, and Z traces are different axes, not different activities.",
+          "Choose Fit All to see the recording. For Desk Object Transfer, look for three groups of movement separated by quiet intervals. Use more than one signal when deciding where the meaningful action starts and ends.",
+        ],
+      },
+      {
+        id: "suggestions",
+        title: "Ask for a first cut",
+        steps: [
+          "Choose Suggest Segments in Auto Segments. If the recording has already been analyzed, the button is Analyze Again.",
+          "Expand the suggestions list and choose a segment. Dashed chart ranges represent suggestions, not final labels.",
+          "Review the beginning and end of the selected activity. Adjust the boundaries if needed.",
+          "Choose Confirm Segment to create a saved snap. It starts unlabeled. Dismiss suggestions you do not want to use.",
+        ],
+        note: "Auto Segments detects changes in motion activity. It does not recognize the meaning of an action or guarantee one segment per repetition. Three movements separated by clear quiet intervals may produce three suggestions, but continuous or subtle motion can split, merge, or be missed.",
+        image: {
+          src: "/images/mac-segments.png",
+          alt: "Actual Auto Segments suggestion selected in the Mac charts, with Confirm Segment in the inspector",
+          caption:
+            "Actual Mac app · Review a suggested range before confirming it. Illustrative sample data.",
+        },
+      },
+      {
+        id: "manual",
+        title: "Make the boundaries yours",
+        paragraphs: [
+          "You can also drag across a chart to select a manual range. Review the selection in the inspector and save it as a snap. ‘Snap’ is the app’s name for a saved motion segment; it does not have to be a finger snap.",
+          "For a saved segment, move the range or drag its handles on the chart. Fit Selection focuses the view on that segment; Fit All returns to the full recording. Hold Space and drag to pan.",
+          "A useful segment includes the complete motion, without a long unrelated pause. Be consistent: decide whether your label includes picking up and putting down the object, then apply that rule across recordings.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "label-and-organize",
+    title: "Label and organize your work",
+    description:
+      "Turn selected ranges into consistent annotations and export-ready folders.",
+    sections: [
+      {
+        id: "labels",
+        title: "Create your project vocabulary",
+        paragraphs: [
+          "Open the workspace toolbar’s Settings menu, then Project Labels. Manage the project’s label names, colors, order, and shortcuts. Project labels travel with exported projects.",
+          "For this example, use Object Transfer as the action label. Rest and Wrist Rotation are optional alternatives for separate activities. Choose labels that describe the action consistently, rather than the person performing it.",
+        ],
+      },
+      {
+        id: "annotate",
+        title: "Label the selected snap",
+        steps: [
+          "Select a saved snap in the chart or Motion Snaps list.",
+          "In the right inspector, open the Label control and choose Object Transfer.",
+          "Add a short note if this segment needs context, such as which direction the box moved.",
+          "Review the range again. Labels and notes are saved automatically in the workspace.",
+        ],
+        image: {
+          src: "/images/mac-editor-light.png",
+          alt: "Actual light-mode Mac editor showing an Object Transfer label and contextual note",
+          caption:
+            "Actual Mac app in Light appearance · The layout stays the same. Illustrative sample data.",
+        },
+      },
+      {
+        id: "folders",
+        title: "Collect the segments you want to export",
+        steps: [
+          "Choose New Folder in the sidebar and give it a meaningful name, such as Object Transfers.",
+          "Select a labeled snap, then choose Add to Folder in the inspector.",
+          "Repeat for the other confirmed movements. Open the folder to review its items before exporting.",
+        ],
+        note: "Choose a label before adding a snap to a folder. A suggestion alone is not ready for your dataset: confirm it, review it, and label it first.",
+      },
+    ],
+  },
+  {
+    slug: "export-and-save",
+    title: "Export a dataset. Keep a project.",
+    description:
+      "Choose between analysis-ready exports and a project you can reopen for editing.",
+    sections: [
+      {
+        id: "csv",
+        title: "Export selected data as CSV",
+        steps: [
+          "Open the folder containing your reviewed, labeled segments.",
+          "Choose Export CSV and review the dataset export options.",
+          "Choose the included data and metadata deliberately. Leave out participant details you do not need.",
+          "Choose the destination and export. Open the result in your analysis tool and check the columns, units, labels, and sample count before using it.",
+        ],
+        paragraphs: [
+          "CSV exports are for working with data outside the editor. They are not a replacement for saving a complete editable project.",
+        ],
+      },
+      {
+        id: "create-ml",
+        title: "Prepare data for Create ML",
+        paragraphs: [
+          "Use Export Create ML from a folder when you need the app’s activity-data export format. Check the export report for skipped items and review the output before training.",
+          "A successful export does not establish dataset quality or model accuracy. Use representative recordings, consistent labels, and an appropriate evaluation strategy for your project.",
+        ],
+      },
+      {
+        id: "project",
+        title: "Save a project you can reopen",
+        steps: [
+          "Choose Export Project in the workspace toolbar.",
+          "Choose a file name and destination. The default project extension is .watchmotion.",
+          "Keep the project file somewhere you control. Use Open Project to continue working with it later.",
+        ],
+        paragraphs: [
+          "In the Mac app’s Settings → Export, you can change the default project name, whether the date and time are appended, and the project format. .watchmotion and .zip contain the same ZIP-based project. CSV datasets stay .csv; metadata stays .json.",
+          "Keep exported projects and datasets private when they include participant information or sensitive notes. A file saved to a cloud-synced folder is also subject to that storage provider’s settings.",
+        ],
+        note: "An exported file is a separate copy. Changes in the workspace do not update an older export automatically. Export again after making important edits.",
+      },
+    ],
+  },
 ];

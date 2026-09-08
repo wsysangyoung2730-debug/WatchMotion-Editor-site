@@ -2,5 +2,55 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Download } from "lucide-react";
 import { guides } from "@/lib/guides";
-export const metadata: Metadata = {title:"User Guide",description:"A practical guide to recording, transferring, segmenting, labeling, and exporting motion with WatchMotion Editor."};
-export default function GuideIndex() { return <div className="container"><header className="page-intro"><span className="eyebrow">The user guide</span><h1>One small movement.<br/>The whole workflow.</h1><p>Move a small box across a desk. Find each movement in the signal. Turn those moments into a labeled dataset.</p></header><aside className="guide-callout"><div><h2>Everyday Hand Motions</h2><p>Follow along in the real Mac app with Desk Object Transfer, our example recording. The project contains illustrative synthetic data, not a real participant’s measurements.</p></div><a className="button button-dark" href="/examples/everyday-hand-motions.watchmotion" download>Download example <Download size={18}/></a></aside><div className="chapter-list">{guides.map((g,i)=><Link className="chapter-card" href={`/guide/${g.slug}`} key={g.slug}><span>{String(i+1).padStart(2,"0")}</span><div><h2>{g.title}</h2><p>{g.description}</p></div><ArrowRight size={22}/></Link>)}</div></div>; }
+export const metadata: Metadata = {
+  title: "User Guide",
+  description:
+    "A practical guide to recording, transferring, segmenting, labeling, and exporting motion with WatchMotion Editor.",
+};
+export default function GuideIndex() {
+  return (
+    <div className="container">
+      <header className="page-intro">
+        <span className="eyebrow">The user guide</span>
+        <h1>
+          One small movement.
+          <br />
+          The whole workflow.
+        </h1>
+        <p>
+          Move a small box across a desk. Find each movement in the signal. Turn
+          those moments into a labeled dataset.
+        </p>
+      </header>
+      <aside className="guide-callout">
+        <div>
+          <h2>Everyday Hand Motions</h2>
+          <p>
+            Follow along in the real Mac app with Desk Object Transfer, our
+            example recording. The project contains illustrative synthetic data,
+            not a real participant’s measurements.
+          </p>
+        </div>
+        <a
+          className="button button-dark"
+          href="/examples/everyday-hand-motions.watchmotion"
+          download
+        >
+          Download example <Download size={18} />
+        </a>
+      </aside>
+      <div className="chapter-list">
+        {guides.map((g, i) => (
+          <Link className="chapter-card" href={`/guide/${g.slug}`} key={g.slug}>
+            <span>{String(i + 1).padStart(2, "0")}</span>
+            <div>
+              <h2>{g.title}</h2>
+              <p>{g.description}</p>
+            </div>
+            <ArrowRight size={22} />
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
