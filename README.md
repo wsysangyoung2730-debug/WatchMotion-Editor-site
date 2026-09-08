@@ -9,6 +9,8 @@
 
 The English product website and user guide for **WatchMotion Editor** — capture motion on Apple Watch, review on iPhone, and build labeled datasets on Mac.
 
+**Live site:** [watch-motion-editor-site.vercel.app](https://watch-motion-editor-site.vercel.app)
+
 ## Screenshots
 
 Actual Mac app captures used on the site. The example project uses **illustrative synthetic data**, not a real participant’s recording. Click an image to view it at full size.
@@ -65,7 +67,7 @@ Configure the values in [`.env.example`](.env.example), then redeploy:
 | `APP_STORE_IOS_URL` | Public iPhone / companion Watch listing; leave blank until released |
 | `APP_STORE_MAC_URL` | Public Mac listing; leave blank until released |
 
-No Vercel deployment has been performed yet. Before publishing, review the privacy policy against actual operating practices and check the site in desktop/mobile browsers. Missing store links show a coming-soon message; preview builds and an unset `SITE_URL` disable indexing.
+Deployed on Vercel from `main`. Before App Store submission, review the privacy policy against actual operating practices and check the site in desktop/mobile browsers. Missing store links show a coming-soon message; preview builds and an unset `SITE_URL` disable indexing.
 
 ## Contact
 
