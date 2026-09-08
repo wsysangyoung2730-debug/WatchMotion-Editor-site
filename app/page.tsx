@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import { ProductShowcase } from "@/components/product-showcase";
 import { ArrowRight, ArrowUpRight, Watch, Smartphone, Monitor, MoveHorizontal, Tags, FolderOutput } from "lucide-react";
 import { site, storeLinks } from "@/lib/site";
 
@@ -8,10 +8,9 @@ export default function Home() {
   return <>
     <section className="home-hero"><div className="container">
       <div className="hero-topline"><span className="eyebrow"><span className="status-dot"/> A motion data workspace</span><span className="hero-platforms">APPLE WATCH / IPHONE / MAC</span></div>
-      <div className="hero-copy"><h1>Every movement.<br/>A story <span className="serif-accent">in data.</span></h1><div className="hero-side"><p>Capture motion on your wrist.<br/>Find the moments that matter.<br/>Build your dataset on Mac.</p><Link className="button button-coral" href="/mac-editor">Explore the editor <ArrowUpRight size={19}/></Link></div></div>
-      <div className="hero-product"><div className="hero-product-heading"><span><span className="small-dot"/> THE MAC WORKSPACE</span><span>Record. Review. Refine.</span></div><div className="hero-app-intro"><Image src="/images/app-icon.png" alt="WatchMotion Editor app icon" width={132} height={132} priority/><div><h2>Precision starts<br/>with a closer look.</h2><p>Three-axis charts. Editable motion segments.<br/>Your labels. Your original recordings.</p></div><Link href="#workflow" className="round-link" aria-label="Explore the workflow"><ArrowRight/></Link></div></div>
-      <div className="hero-caption"><span>One workflow, across three devices.</span><span>No account required in the apps.</span></div>
+      <div className="hero-copy"><h1>Every movement.<br/>A story in data.</h1><div className="hero-side"><h2>Capture on Watch. Refine on Mac.</h2><p>Turn everyday motion into a dataset you understand. Record on your wrist, review on iPhone, and give each movement context on Mac.</p><Link className="text-link" href="/guide/getting-started">Discover the workflow <ArrowUpRight size={19}/></Link></div></div>
     </div></section>
+    <ProductShowcase/>
     <section className="section" id="workflow"><div className="container"><div className="section-heading"><div><span className="eyebrow">01 / THE WORKFLOW</span><h2>From your wrist.<br/>To your next idea.</h2></div><p>Each device has a job. Together, they take you from a raw recording to a dataset you understand.</p></div><div className="device-grid">
       {[{icon:Watch,n:"01",title:"Capture on Watch",text:"Record acceleration, rotation rate, and attitude as you move. Keep the app open while recording.",os:site.minOS.watch+" or later"},{icon:Smartphone,n:"02",title:"Review on iPhone",text:"Check the recording, inspect its motion charts, add a note, and send it to your Mac.",os:site.minOS.iphone+" or later"},{icon:Monitor,n:"03",title:"Refine on Mac",text:"Find activity ranges, adjust boundaries, apply labels, and export a focused dataset.",os:site.minOS.mac+" or later"}].map(({icon:Icon,n,title,text,os})=><article className="device-card" key={n}><div className="card-top"><Icon size={30} strokeWidth={1.4}/><span>{n}</span></div><h3>{title}</h3><p>{text}</p><span className="device-os">{os}</span></article>)}
     </div><p className="subtle-note">The complete workflow requires an Apple Watch paired with an iPhone, plus a Mac. Apps are installed on each device.</p></div></section>

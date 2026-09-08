@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "@fontsource-variable/manrope";
 import "@fontsource-variable/space-grotesk";
 import "./globals.css";
+import "./editorial.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { publicOrigin } from "@/lib/site";
