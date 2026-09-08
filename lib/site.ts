@@ -12,16 +12,40 @@ export function publicOrigin(): string | undefined {
   if (!value) return undefined;
   try {
     const url = new URL(value);
-    if (url.protocol !== "https:" || url.username || url.password || url.pathname !== "/") return undefined;
+    if (
+      url.protocol !== "https:" ||
+      url.username ||
+      url.password ||
+      url.pathname !== "/" ||
+      url.search ||
+      url.hash
+    )
+      return undefined;
     return url.origin;
-  } catch { return undefined; }
+  } catch {
+    return undefined;
+  }
 }
 
 export function storeLinks() {
   function valid(value: string | undefined) {
     if (!value) return undefined;
-    try { const url = new URL(value); return url.protocol === "https:" && url.hostname === "apps.apple.com" ? url.href : undefined; }
-    catch { return undefined; }
+    try {
+      const url = new URL(value);
+      return url.protocol === "https:" &&
+        url.hostname === "apps.apple.com" &&
+        !url.username &&
+        !url.password &&
+        !url.port &&
+        /\/id\d+\/?$/.test(url.pathname)
+        ? url.href
+        : undefined;
+    } catch {
+      return undefined;
+    }
   }
-  return { iphone: valid(process.env.APP_STORE_IOS_URL), mac: valid(process.env.APP_STORE_MAC_URL) };
+  return {
+    iphone: valid(process.env.APP_STORE_IOS_URL),
+    mac: valid(process.env.APP_STORE_MAC_URL),
+  };
 }
